@@ -177,6 +177,8 @@ type MatchInfo struct {
 	Teams []*Team `json:"teams"`
 	// Tournament code used to generate the match. This field was added to match-v5 in patch 11.13 on June 23rd, 2021.
 	TournamentCode string `json:"tournamentCode"`
+	// Refer to indicate if the game ended in termination.
+	EndOfGameResult string `json:"endOfGameResult"`
 }
 
 // GetQueue returns the queue this match was played in

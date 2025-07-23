@@ -349,6 +349,37 @@ func TestMatchInfo_GetGameMode(t *testing.T) {
 	}
 }
 
+func TestMatchInfo_GetEndOfGameResult(t *testing.T) {
+	tests := []struct {
+		name     string
+		model    MatchInfo
+		expected string
+	}{
+		{
+			name:     "game complete",
+			model:    MatchInfo{EndOfGameResult: "GameComplete"},
+			expected: "GameComplete",
+		},
+		{
+			name:     "surrender",
+			model:    MatchInfo{EndOfGameResult: "Surrender"},
+			expected: "Surrender",
+		},
+		{
+			name:     "empty result",
+			model:    MatchInfo{},
+			expected: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				assert.Equal(t, tt.expected, tt.model.EndOfGameResult)
+			},
+		)
+	}
+}
+
 func TestParticipant_GetSummoner(t *testing.T) {
 	type test struct {
 		name    string
