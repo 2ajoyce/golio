@@ -131,7 +131,7 @@ func (m *MatchClient) ListStream(puuid string, options ...*MatchListOptions) <-c
 
 // GetTimeline returns the timeline for the given match
 // NOTE: timelines are not available for every match
-// TODO: update to v5 when struct is documented
+// TODO: double check v5 implementation when struct is documented
 func (m *MatchClient) GetTimeline(id string) (*MatchTimeline, error) {
 	logger := m.logger().WithField("method", "GetTimeline")
 	var timeline MatchTimeline

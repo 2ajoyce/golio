@@ -456,104 +456,152 @@ type Team struct {
 
 // MatchTimeline contains timeline frames for a match
 type MatchTimeline struct {
-	Frames   []*MatchFrame `json:"frames"`
-	Interval int           `json:"frameInterval"`
+	Metadata MetadataTimeline `json:"metadata"`
+	Info     InfoTimeline     `json:"info"`
 }
 
-// MatchFrame is a single frame in the timeline of a game
-type MatchFrame struct {
-	Timestamp         int                          `json:"timestamp"`
-	ParticipantFrames map[string]*ParticipantFrame `json:"participantFrames"`
-	Events            []*MatchEvent                `json:"events"`
+type MetadataTimeline struct {
+	DataVersion  string   `json:"dataVersion"`
+	MatchID      string   `json:"matchId"`
+	Participants []string `json:"participants"`
 }
 
-// ParticipantFrame contains information about a participant in a game at a single timestamp
+type InfoTimeline struct {
+	EndOfGameResult string                `json:"endOfGameResult"`
+	FrameInterval   int64                 `json:"frameInterval"`
+	GameID          int64                 `json:"gameId"`
+	Participants    []ParticipantTimeline `json:"participants"`
+	Frames          []FramesTimeline      `json:"frames"`
+}
+
+type ParticipantTimeline struct {
+	ParticipantID int    `json:"participantId"`
+	PUUID         string `json:"puuid"`
+}
+
+type FramesTimeline struct {
+	Timestamp         int                         `json:"timestamp"`
+	Events            []EventsTimeline            `json:"events"`
+	ParticipantFrames map[string]ParticipantFrame `json:"participantFrames"`
+}
+
+type EventsTimeline struct {
+	Timestamp               int64          `json:"timestamp"`
+	Type                    string         `json:"type"`
+	RealTimestamp           *int64         `json:"realTimestamp,omitempty"`
+	ActualStartTime         *int64         `json:"actualStartTime,omitempty"`
+	AfterID                 *int           `json:"afterId,omitempty"`
+	AssistingParticipantIds []int          `json:"assistingParticipantIds,omitempty"`
+	BeforeID                *int           `json:"beforeId,omitempty"`
+	Bounty                  *int           `json:"bounty,omitempty"`
+	BuildingType            *string        `json:"buildingType,omitempty"`
+	CreatorID               *int           `json:"creatorId,omitempty"`
+	FeatType                *int           `json:"featType,omitempty"`
+	FeatValue               *int           `json:"featValue,omitempty"`
+	GameID                  *int64         `json:"gameId,omitempty"`
+	GoldGain                *int           `json:"goldGain,omitempty"`
+	ItemID                  *int           `json:"itemId,omitempty"`
+	KillerID                *int           `json:"killerId,omitempty"`
+	KillerTeamID            *int           `json:"killerTeamId,omitempty"`
+	KillStreakLength        *int           `json:"killStreakLength,omitempty"`
+	KillType                *string        `json:"killType,omitempty"`
+	LaneType                *string        `json:"laneType,omitempty"`
+	Level                   *int           `json:"level,omitempty"`
+	LevelUpType             *string        `json:"levelUpType,omitempty"`
+	MonsterSubType          *string        `json:"monsterSubType,omitempty"`
+	MonsterType             *string        `json:"monsterType,omitempty"`
+	MultiKillLength         *int           `json:"multiKillLength,omitempty"`
+	Name                    *string        `json:"name,omitempty"`
+	ParticipantID           *int           `json:"participantId,omitempty"`
+	Position                *EventPosition `json:"position,omitempty"`
+	ShutdownBounty          *int           `json:"shutdownBounty,omitempty"`
+	SkillSlot               *int           `json:"skillSlot,omitempty"`
+	TeamID                  *int           `json:"teamId,omitempty"`
+	TowerType               *string        `json:"towerType,omitempty"`
+	TransformType           *string        `json:"transformType,omitempty"`
+	VictimDamageDealt       []VictimDamage `json:"victimDamageDealt,omitempty"`
+	VictimDamageReceived    []VictimDamage `json:"victimDamageReceived,omitempty"`
+	VictimID                *int           `json:"victimId,omitempty"`
+	WardType                *string        `json:"wardType,omitempty"`
+	WinningTeam             *int           `json:"winningTeam,omitempty"`
+}
+
+type EventPosition struct {
+	X int `json:"x"`
+	Y int `json:"y"`
+}
+
+type VictimDamage struct {
+	Basic          *bool   `json:"basic,omitempty"`
+	MagicDamage    *int    `json:"magicDamage,omitempty"`
+	Name           *string `json:"name,omitempty"`
+	ParticipantID  *int    `json:"participantId,omitempty"`
+	PhysicalDamage *int    `json:"physicalDamage,omitempty"`
+	SpellName      *string `json:"spellName,omitempty"`
+	SpellSlot      *int    `json:"spellSlot,omitempty"`
+	TrueDamage     *int    `json:"trueDamage,omitempty"`
+	Type           *string `json:"type,omitempty"`
+}
+
 type ParticipantFrame struct {
-	TotalGold           int            `json:"totalGold"`
-	TeamScore           int            `json:"teamScore"`
-	ParticipantID       int            `json:"participantId"`
-	Level               int            `json:"level"`
-	CurrentGold         int            `json:"currentGold"`
-	MinionsKilled       int            `json:"minionsKilled"`
-	DominionScore       int            `json:"dominionScore"`
-	Position            *MatchPosition `json:"position"`
-	XP                  int            `json:"xp"`
-	JungleMinionsKilled int            `json:"jungleMinionsKilled"`
+	ChampionStats            ChampionStats `json:"championStats"`
+	CurrentGold              int           `json:"currentGold"`
+	DamageStats              DamageStats   `json:"damageStats"`
+	GoldPerSecond            int           `json:"goldPerSecond"`
+	JungleMinionsKilled      int           `json:"jungleMinionsKilled"`
+	Level                    int           `json:"level"`
+	MinionsKilled            int           `json:"minionsKilled"`
+	ParticipantID            int           `json:"participantId"`
+	Position                 ParticipantPosition      `json:"position"`
+	TimeEnemySpentControlled int           `json:"timeEnemySpentControlled"`
+	TotalGold                int           `json:"totalGold"`
+	XP                       int           `json:"xp"`
 }
 
-// MatchEventType is the type of an event
-type MatchEventType string
-
-// All legal value for match event types
-const (
-	MatchEventTypeChampionKill     MatchEventType = "CHAMPION_KILL"
-	MatchEventTypeWardPlaced       MatchEventType = "WARD_PLACED"
-	MatchEventTypeWardKill         MatchEventType = "WARD_KILL"
-	MatchEventTypeBuildingKill     MatchEventType = "BUILDING_KILL"
-	MatchEventTypeEliteMonsterKill MatchEventType = "ELITE_MONSTER_KILL"
-	MatchEventTypeItemPurchased    MatchEventType = "ITEM_PURCHASED"
-	MatchEventTypeItemSold         MatchEventType = "ITEM_SOLD"
-	MatchEventTypeItemDestroyed    MatchEventType = "ITEM_DESTROYED"
-	MatchEventTypeItemUndo         MatchEventType = "ITEM_UNDO"
-	MatchEventTypeSkillLevelUp     MatchEventType = "SKILL_LEVEL_UP"
-	MatchEventTypeAscendedEvent    MatchEventType = "ASCENDED_EVENT"
-	MatchEventTypeCapturePoint     MatchEventType = "CAPTURE_POINT"
-	MatchEventTypePoroKingSummon   MatchEventType = "PORO_KING_SUMMON"
-)
-
-var (
-	// MatchEventTypes is a list of all available match events
-	MatchEventTypes = []MatchEventType{
-		MatchEventTypeChampionKill,
-		MatchEventTypeWardPlaced,
-		MatchEventTypeWardKill,
-		MatchEventTypeBuildingKill,
-		MatchEventTypeEliteMonsterKill,
-		MatchEventTypeItemPurchased,
-		MatchEventTypeItemSold,
-		MatchEventTypeItemDestroyed,
-		MatchEventTypeItemUndo,
-		MatchEventTypeSkillLevelUp,
-		MatchEventTypeAscendedEvent,
-		MatchEventTypeCapturePoint,
-		MatchEventTypePoroKingSummon,
-	}
-)
-
-// MatchEvent is an event in a match at a certain timestamp
-type MatchEvent struct {
-	EventType               string          `json:"eventType"`
-	TowerType               string          `json:"towerType"`
-	TeamID                  int             `json:"teamId"`
-	AscendedType            string          `json:"ascendedType"`
-	KillerID                int             `json:"killerId"`
-	LevelUpType             string          `json:"levelUpType"`
-	PointCaptured           string          `json:"pointCaptured"`
-	AssistingParticipantIDs []int           `json:"assistingParticipantIds"`
-	WardType                string          `json:"wardType"`
-	MonsterType             string          `json:"monsterType"`
-	Type                    *MatchEventType `json:"type"`
-	SkillSlot               int             `json:"skillSlot"`
-	VictimID                int             `json:"victimId"`
-	Timestamp               int             `json:"timestamp"`
-	AfterID                 int             `json:"afterId"`
-	MonsterSubType          string          `json:"monsterSubType"`
-	LaneType                string          `json:"laneType"`
-	ItemID                  int             `json:"itemId"`
-	ParticipantID           int             `json:"participantId"`
-	BuildingType            string          `json:"buildingType"`
-	CreatorID               int             `json:"creatorId"`
-	Position                *MatchPosition  `json:"position"`
-	BeforeID                int             `json:"beforeId"`
+type ChampionStats struct {
+	AbilityHaste         int `json:"abilityHaste"`
+	AbilityPower         int `json:"abilityPower"`
+	Armor                int `json:"armor"`
+	ArmorPen             int `json:"armorPen"`
+	ArmorPenPercent      int `json:"armorPenPercent"`
+	AttackDamage         int `json:"attackDamage"`
+	AttackSpeed          int `json:"attackSpeed"`
+	BonusArmorPenPercent int `json:"bonusArmorPenPercent"`
+	BonusMagicPenPercent int `json:"bonusMagicPenPercent"`
+	CCReduction          int `json:"ccReduction"`
+	CooldownReduction    int `json:"cooldownReduction"`
+	Health               int `json:"health"`
+	HealthMax            int `json:"healthMax"`
+	HealthRegen          int `json:"healthRegen"`
+	Lifesteal            int `json:"lifesteal"`
+	MagicPen             int `json:"magicPen"`
+	MagicPenPercent      int `json:"magicPenPercent"`
+	MagicResist          int `json:"magicResist"`
+	MovementSpeed        int `json:"movementSpeed"`
+	Omnivamp             int `json:"omnivamp"`
+	PhysicalVamp         int `json:"physicalVamp"`
+	Power                int `json:"power"`
+	PowerMax             int `json:"powerMax"`
+	PowerRegen           int `json:"powerRegen"`
+	SpellVamp            int `json:"spellVamp"`
 }
 
-// GetItem returns the item for this event
-func (e *MatchEvent) GetItem(client *datadragon.Client) (datadragon.Item, error) {
-	return client.GetItem(strconv.Itoa(e.ItemID))
+type DamageStats struct {
+	MagicDamageDone               int `json:"magicDamageDone"`
+	MagicDamageDoneToChampions    int `json:"magicDamageDoneToChampions"`
+	MagicDamageTaken              int `json:"magicDamageTaken"`
+	PhysicalDamageDone            int `json:"physicalDamageDone"`
+	PhysicalDamageDoneToChampions int `json:"physicalDamageDoneToChampions"`
+	PhysicalDamageTaken           int `json:"physicalDamageTaken"`
+	TotalDamageDone               int `json:"totalDamageDone"`
+	TotalDamageDoneToChampions    int `json:"totalDamageDoneToChampions"`
+	TotalDamageTaken              int `json:"totalDamageTaken"`
+	TrueDamageDone                int `json:"trueDamageDone"`
+	TrueDamageDoneToChampions     int `json:"trueDamageDoneToChampions"`
+	TrueDamageTaken               int `json:"trueDamageTaken"`
 }
 
-// MatchPosition is a position on the map in a game
-type MatchPosition struct {
+type ParticipantPosition struct {
 	X int `json:"x"`
 	Y int `json:"y"`
 }
