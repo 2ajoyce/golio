@@ -436,7 +436,7 @@ type Objective struct {
 	Kills int  `json:"kills"`
 }
 
-// Objectives holds info for a teeam's objeectives
+// Objectives holds info for a team's objectives
 type Objectives struct {
 	Baron      Objective `json:"baron"`
 	Champion   Objective `json:"champion"`
@@ -454,18 +454,20 @@ type Team struct {
 	Win        bool       `json:"win"`
 }
 
-// MatchTimeline contains timeline frames for a match
+// MatchTimeline holds the metadata and timeline information for a match
 type MatchTimeline struct {
 	Metadata MetadataTimeline `json:"metadata"`
 	Info     InfoTimeline     `json:"info"`
 }
 
+// MetadataTimeline holds the match metadata including matchID participant PUUIDs
 type MetadataTimeline struct {
 	DataVersion  string   `json:"dataVersion"`
 	MatchID      string   `json:"matchId"`
 	Participants []string `json:"participants"`
 }
 
+// InfoTimeline holds the match information frames
 type InfoTimeline struct {
 	EndOfGameResult string                `json:"endOfGameResult"`
 	FrameInterval   int64                 `json:"frameInterval"`
@@ -474,17 +476,20 @@ type InfoTimeline struct {
 	Frames          []FramesTimeline      `json:"frames"`
 }
 
+// ParticipantTimeline holds the participant info required to match frames data to PUUIDs
 type ParticipantTimeline struct {
 	ParticipantID int    `json:"participantId"`
 	PUUID         string `json:"puuid"`
 }
 
+// FramesTimeline holds a snapshot of statistics about each participant and an array of events
 type FramesTimeline struct {
 	Timestamp         int                         `json:"timestamp"`
 	Events            []EventsTimeline            `json:"events"`
 	ParticipantFrames map[string]ParticipantFrame `json:"participantFrames"`
 }
 
+// EventsTimeline holds information about each event that occurred. The fields vary significantly based on the type of event.
 type EventsTimeline struct {
 	Timestamp               int64          `json:"timestamp"`
 	Type                    string         `json:"type"`
@@ -526,11 +531,13 @@ type EventsTimeline struct {
 	WinningTeam             *int           `json:"winningTeam,omitempty"`
 }
 
+// EventPosition holds the position of an event on the map
 type EventPosition struct {
 	X int `json:"x"`
 	Y int `json:"y"`
 }
 
+// VictimDamage holds information about an instance of damage dealt to a victim
 type VictimDamage struct {
 	Basic          *bool   `json:"basic,omitempty"`
 	MagicDamage    *int    `json:"magicDamage,omitempty"`
@@ -543,21 +550,23 @@ type VictimDamage struct {
 	Type           *string `json:"type,omitempty"`
 }
 
+// ParticipantFrame holds the statistics for a participant at that frame in the match timeline
 type ParticipantFrame struct {
-	ChampionStats            ChampionStats `json:"championStats"`
-	CurrentGold              int           `json:"currentGold"`
-	DamageStats              DamageStats   `json:"damageStats"`
-	GoldPerSecond            int           `json:"goldPerSecond"`
-	JungleMinionsKilled      int           `json:"jungleMinionsKilled"`
-	Level                    int           `json:"level"`
-	MinionsKilled            int           `json:"minionsKilled"`
-	ParticipantID            int           `json:"participantId"`
-	Position                 ParticipantPosition      `json:"position"`
-	TimeEnemySpentControlled int           `json:"timeEnemySpentControlled"`
-	TotalGold                int           `json:"totalGold"`
-	XP                       int           `json:"xp"`
+	ChampionStats            ChampionStats       `json:"championStats"`
+	CurrentGold              int                 `json:"currentGold"`
+	DamageStats              DamageStats         `json:"damageStats"`
+	GoldPerSecond            int                 `json:"goldPerSecond"`
+	JungleMinionsKilled      int                 `json:"jungleMinionsKilled"`
+	Level                    int                 `json:"level"`
+	MinionsKilled            int                 `json:"minionsKilled"`
+	ParticipantID            int                 `json:"participantId"`
+	Position                 ParticipantPosition `json:"position"`
+	TimeEnemySpentControlled int                 `json:"timeEnemySpentControlled"`
+	TotalGold                int                 `json:"totalGold"`
+	XP                       int                 `json:"xp"`
 }
 
+// ChampionStats holds the statistics for the participant's champion at that frame in the match timeline
 type ChampionStats struct {
 	AbilityHaste         int `json:"abilityHaste"`
 	AbilityPower         int `json:"abilityPower"`
@@ -586,6 +595,7 @@ type ChampionStats struct {
 	SpellVamp            int `json:"spellVamp"`
 }
 
+// DamageStats holds the damage statistics for a participant at that frame in the match timeline
 type DamageStats struct {
 	MagicDamageDone               int `json:"magicDamageDone"`
 	MagicDamageDoneToChampions    int `json:"magicDamageDoneToChampions"`
@@ -601,6 +611,7 @@ type DamageStats struct {
 	TrueDamageTaken               int `json:"trueDamageTaken"`
 }
 
+// ParticipantPosition holds the position of a participant on the map
 type ParticipantPosition struct {
 	X int `json:"x"`
 	Y int `json:"y"`
