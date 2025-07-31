@@ -134,8 +134,10 @@ func (m *MatchClient) ListStream(puuid string, options ...*MatchListOptions) <-c
 // TODO: double check v5 implementation when struct is documented
 func (m *MatchClient) GetTimeline(id string) (*MatchTimeline, error) {
 	logger := m.logger().WithField("method", "GetTimeline")
+	c := *m.c                                          // copy client
+	c.Region = api.Region(api.RegionToRoute[c.Region]) // Match v5 uses a route instead of a region
 	var timeline MatchTimeline
-	if err := m.c.GetInto(fmt.Sprintf(endpointGetMatchTimeline, id), &timeline); err != nil {
+	if err := c.GetInto(fmt.Sprintf(endpointGetMatchTimeline, id), &timeline); err != nil {
 		logger.Debug(err)
 		return nil, err
 	}
