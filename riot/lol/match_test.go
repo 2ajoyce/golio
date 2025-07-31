@@ -150,6 +150,7 @@ func TestMatchClient_GetTimeline(t *testing.T) {
 		want    *MatchTimeline
 		doer    internal.Doer
 		wantErr error
+		region  api.Region
 	}{
 		{
 			name: "get response",
@@ -161,11 +162,22 @@ func TestMatchClient_GetTimeline(t *testing.T) {
 			wantErr: api.ErrNotFound,
 			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
 		},
+		{
+			name:   "correct host",
+			want:   &MatchTimeline{},
+			region: api.RegionEuropeWest,
+			doer: &mock.Doer{
+				Custom: func(r *http.Request) (*http.Response, error) {
+					assert.Equal(t, api.RegionToRoute[api.RegionEuropeWest], r.Host)
+					return mock.NewJSONMockDoer(MatchTimeline{}, 200).Do(r)
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(
 			tt.name, func(t *testing.T) {
-				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				client := internal.NewClient(tt.region, "API_KEY", tt.doer, logrus.StandardLogger())
 				got, err := (&MatchClient{c: client}).GetTimeline("0")
 				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
 				if tt.wantErr == nil {
