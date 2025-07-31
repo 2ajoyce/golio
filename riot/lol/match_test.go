@@ -168,7 +168,7 @@ func TestMatchClient_GetTimeline(t *testing.T) {
 			region: api.RegionEuropeWest,
 			doer: &mock.Doer{
 				Custom: func(r *http.Request) (*http.Response, error) {
-					assert.Equal(t, api.RegionToRoute[api.RegionEuropeWest], r.Host)
+					assert.Equal(t, fmt.Sprintf("%s.api.riotgames.com", api.RegionToRoute[api.RegionEuropeWest]), r.Host)
 					return mock.NewJSONMockDoer(MatchTimeline{}, 200).Do(r)
 				},
 			},
