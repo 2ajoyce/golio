@@ -68,11 +68,17 @@ func (l *LeagueClient) ListByPuuid(puuid string) ([]*LeagueItem, error) {
 	return leagues, nil
 }
 
-// ListPlayers returns all players with a league specified by its queue, tier and division
+// ListPlayers returns all players with a league specified by its queue, tier and division (defaults to page 1)
 func (l *LeagueClient) ListPlayers(queue queue, tier tier, division division) ([]*LeagueItem, error) {
-	logger := l.logger().WithField("method", "ListPlayers")
+	return l.ListPlayersWithPage(queue, tier, division, 1)
+}
+
+// ListPlayersWithPage returns all players with a league specified by its queue, tier, division, and page number
+func (l *LeagueClient) ListPlayersWithPage(queue queue, tier tier, division division, page int) ([]*LeagueItem, error) {
+	logger := l.logger().WithField("method", "ListPlayersWithPage")
 	var leagues []*LeagueItem
-	if err := l.c.GetInto(fmt.Sprintf(endpointGetLeagues, queue, tier, division), &leagues); err != nil {
+	pageOpt := internal.WithQueryParam("page", fmt.Sprintf("%d", page))
+	if err := l.c.GetInto(fmt.Sprintf(endpointGetLeagues, queue, tier, division), &leagues, pageOpt); err != nil {
 		logger.Debug(err)
 		return nil, err
 	}

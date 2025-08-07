@@ -113,6 +113,8 @@ func TestLeagueClient_GetMaster(t *testing.T) {
 	}
 }
 
+// This test is preserved to enforce backwards compatibility till a new version is released.
+// ListPlayers now calls ListPlayersWithPage using a default page of 1
 func TestLeagueClient_ListPlayers(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -124,7 +126,7 @@ func TestLeagueClient_ListPlayers(t *testing.T) {
 		{
 			name: "get response",
 			want: []*LeagueItem{},
-			doer: mock.NewJSONMockDoer([]*LeagueItem{}, 200),
+			doer: mock.NewJSONMockDoer([]*LeagueItem{}, 205), // Based on observation, the API returns 205 per page
 		},
 		{
 			name:    "not found",
@@ -137,6 +139,39 @@ func TestLeagueClient_ListPlayers(t *testing.T) {
 			tt.name, func(t *testing.T) {
 				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
 				got, err := (&LeagueClient{c: client}).ListPlayers(QueueRankedSolo, TierGold, DivisionOne)
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}
+
+func TestLeagueClient_ListPlayersWithPage(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    []*LeagueItem
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: []*LeagueItem{},
+			doer: mock.NewJSONMockDoer([]*LeagueItem{}, 205),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&LeagueClient{c: client}).ListPlayersWithPage(QueueRankedSolo, TierGold, DivisionOne, 1)
 				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
 				if tt.wantErr == nil {
 					assert.Equal(t, got, tt.want)
@@ -211,7 +246,6 @@ func TestLeagueClient_ListByPuuid(t *testing.T) {
 		)
 	}
 }
-
 
 func TestLeagueClient_Get(t *testing.T) {
 	t.Parallel()
