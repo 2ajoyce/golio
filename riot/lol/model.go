@@ -704,46 +704,41 @@ type FeaturedGames struct {
 
 // Status contains information about all services in a certain region
 type Status struct {
-	Name      string     `json:"name"`
-	RegionTag string     `json:"region_tag"`
-	Hostname  string     `json:"hostname"`
-	Services  []*Service `json:"services"`
-	Slug      string     `json:"slug"`
-	Locales   []string   `json:"locales"`
+	ID           string            `json:"id"`
+	Name         string            `json:"name"`
+	Locales      []string          `json:"locales"`
+	Maintenances []*StatusOverview `json:"maintenances"`
+	Incidents    []*StatusOverview `json:"incidents"`
 }
 
-// Service is a service provided by Riot with its status
-type Service struct {
-	Status    string      `json:"status"`
-	Incidents []*Incident `json:"incidents"`
-	Name      string      `json:"name"`
-	Slug      string      `json:"slug"`
+// StatusOverview contains information about a maintenance or incident
+type StatusOverview struct {
+	ID                int              `json:"id"`
+	MaintenanceStatus string           `json:"maintenance_status"`
+	IncidentSeverity  string           `json:"incident_severity"`
+	Titles            []*StatusContent `json:"titles"`
+	Updates           []*StatusUpdate  `json:"updates"`
+	CreatedAt         string           `json:"created_at"`
+	ArchiveAt         string           `json:"archive_at"`
+	UpdatedAt         string           `json:"updated_at"`
+	Platforms         []string         `json:"platforms"`
 }
 
-// Incident contains information about an incident
-type Incident struct {
-	Active    bool             `json:"active"`
-	CreatedAt string           `json:"created_at"`
-	ID        int              `json:"id"`
-	Updates   []*StatusMessage `json:"updates"`
+// StatusContent contains the content of a status message
+type StatusContent struct {
+	Locale  string `json:"locale"`
+	Content string `json:"content"`
 }
 
-// StatusMessage contains information about a status message
-type StatusMessage struct {
-	Severity     string               `json:"severity"`
-	Author       string               `json:"author"`
-	CreatedAt    string               `json:"created_at"`
-	Translations []*StatusTranslation `json:"translations"`
-	UpdatedAt    string               `json:"updated_at"`
-	Content      string               `json:"content"`
-	ID           string               `json:"id"`
-}
-
-// StatusTranslation contains the status message content in a certain language
-type StatusTranslation struct {
-	Locale    string `json:"locale"`
-	Content   string `json:"content"`
-	UpdatedAt string `json:"updated_at"`
+// StatusUpdate contains information about a status update
+type StatusUpdate struct {
+	ID               int              `json:"id"`
+	Author           string           `json:"author"`
+	Publish          bool             `json:"publish"`
+	PublishLocations []string         `json:"publish_locations"`
+	Translations     []*StatusContent `json:"translations"`
+	CreatedAt        string           `json:"created_at"`
+	UpdatedAt        string           `json:"updated_at"`
 }
 
 // Summoner represents a summoner with several related IDs
