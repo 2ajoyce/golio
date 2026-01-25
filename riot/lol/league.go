@@ -79,6 +79,17 @@ func (l *LeagueClient) ListPlayers(queue queue, tier tier, division division) ([
 	return leagues, nil
 }
 
+// ListExpPlayers returns all players with a league specified by its queue, tier and division
+func (l *LeagueClient) ListExpPlayers(queue queue, tier tier, division division) ([]*LeagueItem, error) {
+	logger := l.logger().WithField("method", "ListExpPlayers")
+	var leagues []*LeagueItem
+	if err := l.c.GetInto(fmt.Sprintf(endpointGetLeagueExpEntries, queue, tier, division), &leagues); err != nil {
+		logger.Debug(err)
+		return nil, err
+	}
+	return leagues, nil
+}
+
 // Get returns a ranked league with the specified ID
 func (l *LeagueClient) Get(leagueID string) (*LeagueList, error) {
 	logger := l.logger().WithField("method", "Get")

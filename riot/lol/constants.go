@@ -27,6 +27,8 @@ const (
 	endpointGetLeaguesByPuuid                   = endpointLeagueBase + "/entries/by-puuid/%s"
 	endpointGetLeagues                          = endpointLeagueBase + "/entries/%s/%s/%s"
 	endpointGetLeague                           = endpointLeagueBase + "/leagues/%s"
+	endpointLeagueExpBase                       = endpointBase + "/league-exp/v4"
+	endpointGetLeagueExpEntries                 = endpointLeagueExpBase + "/entries/%s/%s/%s"
 	endpointStatusBase                          = endpointBase + "/status/v3"
 	endpointGetStatus                           = endpointStatusBase + "/shard-data"
 	endpointMatchBase                           = endpointBase + "/match/v5"
