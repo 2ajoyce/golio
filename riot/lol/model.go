@@ -883,3 +883,9 @@ type ApexPlayerInfo struct {
 	Value    float64 `json:"value"`
 	Position int32   `json:"position"`
 }
+
+// MatchReplays contains the list of match replays URLs
+type MatchReplays struct {
+	Total         int      `json:"total"`
+	MatchFileURLs []string `json:"matchFileURLs"`
+}
