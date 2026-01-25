@@ -13,31 +13,26 @@ type SummonerClient struct {
 	c *internal.Client
 }
 
-// GetByAccountID returns the summoner with the given account ID
-func (s *SummonerClient) GetByAccountID(id string) (*Summoner, error) {
-	return s.getBy(identificationAccountID, id, s.logger().WithField("method", "GetByAccountID"))
-}
-
 // GetByPUUID returns the summoner with the given PUUID
 func (s *SummonerClient) GetByPUUID(puuid string) (*Summoner, error) {
-	return s.getBy(identificationPUUID, puuid, s.logger().WithField("method", "GetByPUUID"))
-}
-
-// GetByID returns the summoner with the given ID
-func (s *SummonerClient) GetByID(summonerID string) (*Summoner, error) {
-	return s.getBy(identificationSummonerID, summonerID, s.logger().WithField("method", "GetByID"))
-}
-
-func (s *SummonerClient) getBy(by identification, value string, logger log.FieldLogger) (*Summoner, error) {
-	var endpoint string
-	switch by {
-	case identificationSummonerID:
-		endpoint = fmt.Sprintf(endpointGetSummonerBySummonerID, value)
-	default:
-		endpoint = fmt.Sprintf(endpointGetSummonerBy, by, value)
-	}
+	logger := s.logger().WithField("method", "GetByPUUID")
 	var summoner *Summoner
-	if err := s.c.GetInto(endpoint, &summoner); err != nil {
+	if err := s.c.GetInto(fmt.Sprintf(endpointGetSummonerByPUUID, puuid), &summoner); err != nil {
+		logger.Debug(err)
+		return nil, err
+	}
+	return summoner, nil
+}
+
+// GetMe returns the summoner for the given access token
+func (s *SummonerClient) GetMe(accessToken string) (*Summoner, error) {
+	logger := s.logger().WithField("method", "GetMe")
+	var summoner *Summoner
+	if err := s.c.GetInto(
+		endpointGetSummonerMe,
+		&summoner,
+		internal.WithHeader("Authorization", "Bearer "+accessToken),
+	); err != nil {
 		logger.Debug(err)
 		return nil, err
 	}

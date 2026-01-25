@@ -179,7 +179,6 @@ func TestLeagueClient_ListByPuuid(t *testing.T) {
 	}
 }
 
-
 func TestLeagueClient_Get(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

@@ -54,11 +54,12 @@ type ChampionMastery struct {
 	TokensEarned                 int    `json:"tokensEarned"`
 	ChampionPointsSinceLastLevel int    `json:"championPointsSinceLastLevel"`
 	SummonerID                   string `json:"summonerId"`
+	Puuid                        string `json:"puuid"`
 }
 
 // GetSummoner returns the summoner of this mastery
 func (m *ChampionMastery) GetSummoner(client *Client) (*Summoner, error) {
-	return client.Summoner.GetByID(m.SummonerID)
+	return client.Summoner.GetByPUUID(m.Puuid)
 }
 
 // GetChampion returns the champion of this mastery
@@ -110,7 +111,7 @@ type LeagueItem struct {
 
 // GetSummoner returns the summoner of this league item
 func (i *LeagueItem) GetSummoner(client *Client) (*Summoner, error) {
-	return client.Summoner.GetByID(i.SummonerID)
+	return client.Summoner.GetByPUUID(i.PUUID)
 }
 
 // MiniSeries represents a mini series when playing to ascend to the next ranked tier
@@ -747,8 +748,6 @@ type Summoner struct {
 	PUUID         string `json:"puuid"`
 	SummonerLevel int    `json:"summonerLevel"`
 	RevisionDate  int    `json:"revisionDate"`
-	ID            string `json:"id"`
-	AccountID     string `json:"accountId"`
 }
 
 // LobbyEventList is a wrapper for a list of lobby events in a tournament
