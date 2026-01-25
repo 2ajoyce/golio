@@ -6,4 +6,6 @@ const (
 	endpointAccountsBase = endpointAccountBase + "/accounts"
 	endpointGetByPUUID   = endpointAccountsBase + "/by-puuid/%s"
 	endpointGetByRiotID  = endpointAccountsBase + "/by-riot-id/%s/%s"
+	endpointGetMe        = endpointAccountsBase + "/me"
+	endpointActiveShards = endpointAccountBase + "/active-shards/by-game/%s/by-puuid/%s"
 )
