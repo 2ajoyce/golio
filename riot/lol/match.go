@@ -144,7 +144,7 @@ func (m *MatchClient) GetTimeline(id string) (*MatchTimeline, error) {
 	return &timeline, nil
 }
 
-// GetReplays returns the replays for the given match
+// GetReplays returns the replays for the given puuid
 func (m *MatchClient) GetReplays(puuid string) (*MatchReplays, error) {
 	logger := m.logger().WithField("method", "GetReplays")
 	c := *m.c                                          // copy client

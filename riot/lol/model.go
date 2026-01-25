@@ -45,16 +45,35 @@ func (i *ChampionInfo) GetChampions(client *datadragon.Client) ([]datadragon.Cha
 
 // ChampionMastery represents the mastery of a champion in the mastery system for a summoner
 type ChampionMastery struct {
-	ChestGranted                 bool   `json:"chestGranted"`
-	ChampionLevel                int    `json:"championLevel"`
-	ChampionPoints               int    `json:"championPoints"`
-	ChampionID                   int    `json:"championId"`
-	ChampionPointsUntilNextLevel int    `json:"championPointsUntilNextLevel"`
-	LastPlayTime                 int    `json:"lastPlayTime"`
-	TokensEarned                 int    `json:"tokensEarned"`
-	ChampionPointsSinceLastLevel int    `json:"championPointsSinceLastLevel"`
-	SummonerID                   string `json:"summonerId"`
-	Puuid                        string `json:"puuid"`
+	Puuid                        string              `json:"puuid"`
+	ChampionID                   int                 `json:"championId"`
+	ChampionLevel                int                 `json:"championLevel"`
+	ChampionPoints               int                 `json:"championPoints"`
+	LastPlayTime                 int64               `json:"lastPlayTime"`
+	ChampionPointsSinceLastLevel int                 `json:"championPointsSinceLastLevel"`
+	ChampionPointsUntilNextLevel int                 `json:"championPointsUntilNextLevel"`
+	ChestGranted                 bool                `json:"chestGranted"`
+	MarkRequiredForNextLevel     int                 `json:"markRequiredForNextLevel"`
+	TokensEarned                 int                 `json:"tokensEarned"`
+	ChampionSeasonMilestone      int                 `json:"championSeasonMilestone"`
+	MilestoneGrades              []string            `json:"milestoneGrades"`
+	NextSeasonMilestone          NextSeasonMilestone `json:"nextSeasonMilestone"`
+}
+
+// NextSeasonMilestone represents the requirements for the next season milestone
+type NextSeasonMilestone struct {
+	RequireGradeCounts map[string]int `json:"requireGradeCounts"`
+	RewardMarks        int            `json:"rewardMarks"`
+	Bonus              bool           `json:"bonus"`
+	RewardConfig       *RewardConfig  `json:"rewardConfig"`
+	TotalGamesRequires int            `json:"totalGamesRequires"`
+}
+
+// RewardConfig represents the reward configuration for a milestone
+type RewardConfig struct {
+	RewardValue   string `json:"rewardValue"`
+	RewardType    string `json:"rewardType"`
+	MaximumReward int    `json:"maximumReward"`
 }
 
 // GetSummoner returns the summoner of this mastery
@@ -93,8 +112,8 @@ func (l *LeagueList) GetRank(i int) *LeagueItem {
 
 // LeagueItem represents a summoners ranked position in a league
 type LeagueItem struct {
+	LeagueID     string      `json:"leagueId,omitempty"`
 	QueueType    string      `json:"queueType"`
-	SummonerName string      `json:"summonerName"`
 	HotStreak    bool        `json:"hotStreak"`
 	MiniSeries   *MiniSeries `json:"miniSeries"`
 	Wins         int         `json:"wins"`
@@ -104,7 +123,6 @@ type LeagueItem struct {
 	Inactive     bool        `json:"inactive"`
 	Tier         string      `json:"tier"`
 	Rank         string      `json:"rank"`
-	SummonerID   string      `json:"summonerId"`
 	PUUID        string      `json:"puuid"`
 	LeaguePoints int         `json:"leaguePoints"`
 }

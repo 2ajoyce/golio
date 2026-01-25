@@ -14,15 +14,15 @@ type ThirdPartyCodeClient struct {
 	c *internal.Client
 }
 
-// Get returns the third party code for the given summoner id
-func (t *ThirdPartyCodeClient) Get(summonerID string) (string, error) {
+// Get returns the third party code for the given puuid
+func (t *ThirdPartyCodeClient) Get(puuid string) (string, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
 			"method": "Get",
 		},
 	)
 	var code string
-	if err := t.c.GetInto(fmt.Sprintf(endpointGetThirdPartyCode, summonerID), &code); err != nil {
+	if err := t.c.GetInto(fmt.Sprintf(endpointGetThirdPartyCode, puuid), &code); err != nil {
 		logger.Debug(err)
 		return "", err
 	}

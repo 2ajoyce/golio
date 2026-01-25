@@ -158,9 +158,9 @@ func TestChampionMastery_GetSummoner(t *testing.T) {
 	tests := []test{
 		{
 			name:  "valid",
-			doer:  mock.NewJSONMockDoer(Summoner{ID: "id"}, 200),
-			model: ChampionMastery{SummonerID: "id"},
-			want:  &Summoner{ID: "id"},
+			doer:  mock.NewJSONMockDoer(Summoner{PUUID: "id"}, 200),
+			model: ChampionMastery{Puuid: "id"},
+			want:  &Summoner{PUUID: "id"},
 		},
 	}
 	for _, test := range tests {
@@ -220,9 +220,9 @@ func TestLeagueItem_GetSummoner(t *testing.T) {
 	tests := []test{
 		{
 			name:  "valid",
-			doer:  mock.NewJSONMockDoer(Summoner{ID: "id"}, 200),
-			model: LeagueItem{SummonerID: "id"},
-			want:  &Summoner{ID: "id"},
+			doer:  mock.NewJSONMockDoer(Summoner{PUUID: "id"}, 200),
+			model: LeagueItem{PUUID: "id"},
+			want:  &Summoner{PUUID: "id"},
 		},
 	}
 	for _, test := range tests {
@@ -360,9 +360,9 @@ func TestParticipant_GetSummoner(t *testing.T) {
 	tests := []test{
 		{
 			name:  "valid",
-			doer:  mock.NewJSONMockDoer(Summoner{ID: "id"}, 200),
-			model: Participant{SummonerID: "id"},
-			want:  &Summoner{ID: "id"},
+			doer:  mock.NewJSONMockDoer(Summoner{PUUID: "id"}, 200),
+			model: Participant{PUUID: "id"},
+			want:  &Summoner{PUUID: "id"},
 		},
 	}
 	for _, test := range tests {

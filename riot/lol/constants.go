@@ -40,7 +40,7 @@ const (
 	endpointGetSummonerByPUUID                  = endpointSummonerBase + "/summoners/by-puuid/%s"
 	endpointGetSummonerMe                       = endpointSummonerBase + "/summoners/me"
 	endpointSpectatorBase                       = endpointBase + "/spectator/v5"
-	endpointGetCurrentGame                      = endpointSpectatorBase + "/active-games/by-summoner/%s"
+	endpointGetCurrentGame                      = endpointSpectatorBase + "/active-games/by-puuid/%s"
 	endpointGetFeaturedGames                    = endpointSpectatorBase + "/featured-games"
 	endpointTournamentStubBase                  = endpointBase + "/tournament-stub/v5"
 	endpointCreateStubTournamentCodes           = endpointTournamentStubBase + "/codes?count=%d&tournamentId=%d"
@@ -54,7 +54,7 @@ const (
 	endpointCreateTournament                    = endpointTournamentBase + "/tournaments"
 	endpointGetTournament                       = endpointTournamentBase + "/codes/%s"
 	endpointUpdateTournament                    = endpointTournamentBase + "/codes/%s"
-	endpointGetThirdPartyCode                   = endpointPlatformBase + "/third-party-code/by-summoner/%s"
+	endpointGetThirdPartyCode                   = endpointBase + "/platform/v4/third-party-code/by-puuid/%s"
 )
 
 type identification string
