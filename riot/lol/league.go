@@ -46,17 +46,6 @@ func (l *LeagueClient) GetMaster(queue queue) (*LeagueList, error) {
 	return list, nil
 }
 
-// ListBySummoner returns all leagues a summoner with the given ID is in
-func (l *LeagueClient) ListBySummoner(summonerID string) ([]*LeagueItem, error) {
-	logger := l.logger().WithField("method", "ListBySummoner")
-	var leagues []*LeagueItem
-	if err := l.c.GetInto(fmt.Sprintf(endpointGetLeaguesBySummoner, summonerID), &leagues); err != nil {
-		logger.Debug(err)
-		return nil, err
-	}
-	return leagues, nil
-}
-
 // ListByPuuid returns all leagues a summoner with the given puuid is in
 func (l *LeagueClient) ListByPuuid(puuid string) ([]*LeagueItem, error) {
 	logger := l.logger().WithField("method", "ListByPuuid")
