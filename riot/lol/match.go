@@ -144,6 +144,19 @@ func (m *MatchClient) GetTimeline(id string) (*MatchTimeline, error) {
 	return &timeline, nil
 }
 
+// GetReplays returns the replays for the given match
+func (m *MatchClient) GetReplays(puuid string) (*MatchReplays, error) {
+	logger := m.logger().WithField("method", "GetReplays")
+	c := *m.c                                          // copy client
+	c.Region = api.Region(api.RegionToRoute[c.Region]) // Match v5 uses a route instead of a region
+	var replays MatchReplays
+	if err := c.GetInto(fmt.Sprintf(endpointGetMatchReplays, puuid), &replays); err != nil {
+		logger.Debug(err)
+		return nil, err
+	}
+	return &replays, nil
+}
+
 func (m *MatchClient) logger() log.FieldLogger {
 	return m.c.Logger().WithField("category", "match")
 }

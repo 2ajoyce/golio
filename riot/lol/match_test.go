@@ -187,3 +187,42 @@ func TestMatchClient_GetTimeline(t *testing.T) {
 		)
 	}
 }
+
+func TestMatchClient_GetReplays(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    *MatchReplays
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: &MatchReplays{
+				Total:         2,
+				MatchFileURLs: []string{"replay1", "replay2"},
+			},
+			doer: mock.NewJSONMockDoer(&MatchReplays{
+				Total:         2,
+				MatchFileURLs: []string{"replay1", "replay2"},
+			}, 200),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&MatchClient{c: client}).GetReplays("puuid")
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}

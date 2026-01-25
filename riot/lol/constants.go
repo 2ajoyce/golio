@@ -35,6 +35,7 @@ const (
 	endpointGetMatchIDs                         = endpointGetMatchIDsBase + "/%s/ids?start=%d&count=%d"
 	endpointGetMatch                            = endpointMatchBase + "/matches/%s"
 	endpointGetMatchTimeline                    = endpointMatchBase + "/matches/%s/timeline"
+	endpointGetMatchReplays                     = endpointMatchBase + "/matches/by-puuid/%s/replays"
 	endpointSummonerBase                        = endpointBase + "/summoner/v4"
 	endpointGetSummonerBySummonerID             = endpointSummonerBase + "/summoners/%s"
 	endpointGetSummonerBy                       = endpointSummonerBase + "/summoners/by-%s/%s"
