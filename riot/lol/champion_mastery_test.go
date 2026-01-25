@@ -112,3 +112,135 @@ func TestChampionMasteryClient_GetTotal(t *testing.T) {
 		)
 	}
 }
+
+func TestChampionMasteryClient_ListByPuuid(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    []*ChampionMastery
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: []*ChampionMastery{},
+			doer: mock.NewJSONMockDoer([]*ChampionMastery{}, 200),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&ChampionMasteryClient{c: client}).ListByPuuid("puuid")
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}
+
+func TestChampionMasteryClient_GetByPuuid(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    *ChampionMastery
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: &ChampionMastery{},
+			doer: mock.NewJSONMockDoer(&ChampionMastery{}, 200),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&ChampionMasteryClient{c: client}).GetByPuuid("puuid", "id")
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}
+
+func TestChampionMasteryClient_GetTopByPuuid(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    []*ChampionMastery
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: []*ChampionMastery{},
+			doer: mock.NewJSONMockDoer([]*ChampionMastery{}, 200),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&ChampionMasteryClient{c: client}).GetTopByPuuid("puuid", 3)
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}
+
+func TestChampionMasteryClient_GetTotalByPuuid(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		want    int
+		doer    internal.Doer
+		wantErr error
+	}{
+		{
+			name: "get response",
+			want: 1,
+			doer: mock.NewJSONMockDoer(1, 200),
+		},
+		{
+			name:    "not found",
+			wantErr: api.ErrNotFound,
+			doer:    mock.NewStatusMockDoer(http.StatusNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(
+			tt.name, func(t *testing.T) {
+				client := internal.NewClient(api.RegionEuropeWest, "API_KEY", tt.doer, logrus.StandardLogger())
+				got, err := (&ChampionMasteryClient{c: client}).GetTotalByPuuid("puuid")
+				require.Equal(t, err, tt.wantErr, fmt.Sprintf("want err %v, got %v", tt.wantErr, err))
+				if tt.wantErr == nil {
+					assert.Equal(t, got, tt.want)
+				}
+			},
+		)
+	}
+}
