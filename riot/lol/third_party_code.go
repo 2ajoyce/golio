@@ -18,7 +18,7 @@ type ThirdPartyCodeClient struct {
 func (t *ThirdPartyCodeClient) Get(puuid string) (string, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "Get",
+			logFieldMethod: "Get",
 		},
 	)
 	var code string

@@ -19,6 +19,8 @@ const (
 	baseURL           = "api.riotgames.com"
 	scheme            = "https"
 	apiTokenHeaderKey = "X-Riot-Token"
+	logFieldMethod    = "method"
+	logFieldEndpoint  = "endpoint"
 )
 
 // Client provides methods for communication with the Riot API.
@@ -43,8 +45,8 @@ func NewClient(region api.Region, key string, client Doer, logger log.FieldLogge
 func (c *Client) GetInto(endpoint string, target any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "GetInto",
-			"endpoint": endpoint,
+			logFieldMethod:   "GetInto",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	response, err := c.Get(endpoint, reqOptions...)
@@ -63,8 +65,8 @@ func (c *Client) GetInto(endpoint string, target any, reqOptions ...RequestOptio
 func (c *Client) PostInto(endpoint string, body, target any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "PostInto",
-			"endpoint": endpoint,
+			logFieldMethod:   "PostInto",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	response, err := c.Post(endpoint, body, reqOptions...)
@@ -83,8 +85,8 @@ func (c *Client) PostInto(endpoint string, body, target any, reqOptions ...Reque
 func (c *Client) Put(endpoint string, body any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "Put",
-			"endpoint": endpoint,
+			logFieldMethod:   "Put",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	buf := &bytes.Buffer{}
@@ -105,8 +107,8 @@ func (c *Client) Get(endpoint string, reqOptions ...RequestOption) (*http.Respon
 func (c *Client) Post(endpoint string, body any, reqOptions ...RequestOption) (*http.Response, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "Post",
-			"endpoint": endpoint,
+			logFieldMethod:   "Post",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	buf := &bytes.Buffer{}
@@ -124,8 +126,8 @@ func (c *Client) DoRequest(
 ) (*http.Response, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "DoRequest",
-			"endpoint": endpoint,
+			logFieldMethod:   "DoRequest",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	request, err := c.NewRequest(method, endpoint, body, reqOptions...)
@@ -163,7 +165,7 @@ func (c *Client) DoRequest(
 		err, ok := api.StatusToError[response.StatusCode]
 		if !ok {
 			err = api.Error{
-				Message:    "unknown error reason",
+				Message:    api.ErrMsgUnknown,
 				StatusCode: response.StatusCode,
 			}
 		}
@@ -178,8 +180,8 @@ func (c *Client) NewRequest(
 ) (*http.Request, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
-			"method":   "NewRequest",
-			"endpoint": endpoint,
+			logFieldMethod:   "NewRequest",
+			logFieldEndpoint: endpoint,
 		},
 	)
 	request, err := http.NewRequest(method, fmt.Sprintf(apiURLFormat, scheme, c.Region, baseURL, endpoint), body)

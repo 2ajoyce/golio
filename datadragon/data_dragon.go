@@ -380,7 +380,7 @@ func (c *Client) doRequest(format dataDragonURL, endpoint string) (*http.Respons
 		err, ok := api.StatusToError[response.StatusCode]
 		if !ok {
 			err = api.Error{
-				Message:    "unknown error reason",
+				Message:    api.ErrMsgUnknown,
 				StatusCode: response.StatusCode,
 			}
 		}

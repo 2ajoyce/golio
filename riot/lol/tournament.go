@@ -20,8 +20,8 @@ type TournamentClient struct {
 func (t *TournamentClient) CreateCodes(id, count int, params *TournamentCodeParameters, stub bool) ([]string, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "CreateCodes",
-			"stub":   stub,
+			logFieldMethod: "CreateCodes",
+			logFieldStub:   stub,
 		},
 	)
 	t.c.Region = api.Region(api.RegionToRoute[t.c.Region])
@@ -42,8 +42,8 @@ func (t *TournamentClient) CreateCodes(id, count int, params *TournamentCodePara
 func (t *TournamentClient) ListLobbyEvents(code string, useStub bool) (*LobbyEventList, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "ListLobbyEvents",
-			"stub":   useStub,
+			logFieldMethod: "ListLobbyEvents",
+			logFieldStub:   useStub,
 		},
 	)
 	t.c.Region = api.Region(api.RegionToRoute[t.c.Region])
@@ -65,8 +65,8 @@ func (t *TournamentClient) ListLobbyEvents(code string, useStub bool) (*LobbyEve
 func (t *TournamentClient) CreateProvider(parameters *ProviderRegistrationParameters, useStub bool) (int, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "CreateProvider",
-			"stub":   useStub,
+			logFieldMethod: "CreateProvider",
+			logFieldStub:   useStub,
 		},
 	)
 	t.c.Region = api.Region(api.RegionToRoute[t.c.Region])
@@ -88,8 +88,8 @@ func (t *TournamentClient) CreateProvider(parameters *ProviderRegistrationParame
 func (t *TournamentClient) Create(parameters *TournamentRegistrationParameters, useStub bool) (int, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "Create",
-			"stub":   useStub,
+			logFieldMethod: "Create",
+			logFieldStub:   useStub,
 		},
 	)
 	t.c.Region = api.Region(api.RegionToRoute[t.c.Region])
@@ -109,7 +109,7 @@ func (t *TournamentClient) Create(parameters *TournamentRegistrationParameters, 
 func (t *TournamentClient) Get(code string) (*Tournament, error) {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "Get",
+			logFieldMethod: "Get",
 		},
 	)
 	var tournament Tournament
@@ -124,7 +124,7 @@ func (t *TournamentClient) Get(code string) (*Tournament, error) {
 func (t *TournamentClient) Update(code string, parameters TournamentUpdateParameters) error {
 	logger := t.logger().WithFields(
 		log.Fields{
-			"method": "Update",
+			logFieldMethod: "Update",
 		},
 	)
 	t.c.Region = api.Region(api.RegionToRoute[t.c.Region])

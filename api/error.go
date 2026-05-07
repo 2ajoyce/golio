@@ -4,6 +4,9 @@ import (
 	"net/http"
 )
 
+// ErrMsgUnknown is the error message used when an unexpected HTTP status code is received.
+const ErrMsgUnknown = "unknown error reason"
+
 // Error is a custom error type used by the API to signal http error responses
 type Error struct {
 	Message    string

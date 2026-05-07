@@ -214,7 +214,7 @@ func (c *Client) getInto(endpoint string, target any) error {
 		err, ok := api.StatusToError[resp.StatusCode]
 		if !ok {
 			err = api.Error{
-				Message:    "unknown error reason",
+				Message:    api.ErrMsgUnknown,
 				StatusCode: resp.StatusCode,
 			}
 		}

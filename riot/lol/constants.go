@@ -1,6 +1,11 @@
 package lol
 
 const (
+	logFieldMethod = "method"
+	logFieldStub   = "stub"
+)
+
+const (
 	endpointBase                                = "/lol"
 	endpointMasteryBase                         = endpointBase + "/champion-mastery/v4"
 	endpointMasteriesBase                       = endpointMasteryBase + "/champion-masteries"
