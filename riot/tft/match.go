@@ -2,9 +2,11 @@ package tft
 
 import (
 	"fmt"
+
+	log "github.com/sirupsen/logrus"
+
 	"github.com/KnutZuidema/golio/api"
 	"github.com/KnutZuidema/golio/internal"
-	log "github.com/sirupsen/logrus"
 )
 
 // MatchClient provides methods for match endpoints of the League of Legends TFT API.

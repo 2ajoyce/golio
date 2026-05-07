@@ -10,7 +10,7 @@ import (
 
 func TestNewJSONMockDoer(t *testing.T) {
 	type args struct {
-		object interface{}
+		object any
 		code   int
 	}
 	tests := []struct {
@@ -174,7 +174,7 @@ func TestFailJSONEncoding_MarshalJSON(t *testing.T) {
 
 func TestNewRateLimitDoer(t *testing.T) {
 	type args struct {
-		object interface{}
+		object any
 	}
 	tests := []struct {
 		name string
@@ -209,7 +209,7 @@ func TestNewRateLimitDoer(t *testing.T) {
 
 func TestNewUnavailableOnceDoer(t *testing.T) {
 	type args struct {
-		object interface{}
+		object any
 	}
 	tests := []struct {
 		name string

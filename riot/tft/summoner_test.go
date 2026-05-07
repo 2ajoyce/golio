@@ -2,14 +2,16 @@ package tft
 
 import (
 	"fmt"
-	"github.com/KnutZuidema/golio/api"
-	"github.com/KnutZuidema/golio/internal"
-	"github.com/KnutZuidema/golio/internal/mock"
+	"net/http"
+	"testing"
+
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"net/http"
-	"testing"
+
+	"github.com/KnutZuidema/golio/api"
+	"github.com/KnutZuidema/golio/internal"
+	"github.com/KnutZuidema/golio/internal/mock"
 )
 
 func TestTFTSummoner_GetSummonerByAccountID(t *testing.T) {

@@ -19,7 +19,7 @@ type Client struct {
 	logger  logrus.FieldLogger
 	client  internal.Doer
 	mutexes map[string]*sync.RWMutex
-	cache   map[string]interface{}
+	cache   map[string]any
 }
 
 // NewClient returns a new client
@@ -35,7 +35,7 @@ func NewClient(doer internal.Doer, logger logrus.FieldLogger) *Client {
 		logger:  logger,
 		client:  doer,
 		mutexes: mutexes,
-		cache:   map[string]interface{}{},
+		cache:   map[string]any{},
 	}
 }
 
@@ -201,10 +201,10 @@ func (c *Client) GetGameType(typ string) (GameType, error) {
 
 // ClearCaches clears caches for all methods
 func (c *Client) ClearCaches() {
-	c.cache = map[string]interface{}{}
+	c.cache = map[string]any{}
 }
 
-func (c *Client) getInto(endpoint string, target interface{}) error {
+func (c *Client) getInto(endpoint string, target any) error {
 	req, _ := http.NewRequest(http.MethodGet, endpoint, nil)
 	resp, err := c.client.Do(req)
 	if err != nil {

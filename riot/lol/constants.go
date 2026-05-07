@@ -57,15 +57,6 @@ const (
 	endpointGetThirdPartyCode                   = endpointBase + "/platform/v4/third-party-code/by-puuid/%s"
 )
 
-type identification string
-
-const (
-	identificationName       identification = "name"
-	identificationAccountID  identification = "account"
-	identificationPUUID      identification = "puuid"
-	identificationSummonerID identification = "summonerID"
-)
-
 type queue string
 
 // All possible queues

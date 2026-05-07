@@ -508,7 +508,8 @@ type FramesTimeline struct {
 	ParticipantFrames map[string]ParticipantFrame `json:"participantFrames"`
 }
 
-// EventsTimeline holds information about each event that occurred. The fields vary significantly based on the type of event.
+// EventsTimeline holds information about each event that occurred. The fields vary
+// significantly based on the type of event.
 type EventsTimeline struct {
 	Timestamp               int64          `json:"timestamp"`
 	Type                    string         `json:"type"`

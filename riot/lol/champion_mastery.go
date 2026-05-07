@@ -28,7 +28,8 @@ func (c *ChampionMasteryClient) ListByPuuid(puuid string) ([]*ChampionMastery, e
 	return masteries, nil
 }
 
-// GetByPuuid returns information about the mastery of the champion with the given ID for the summoner with the given PUUID
+// GetByPuuid returns information about the mastery of the champion with the given ID
+// for the summoner with the given PUUID
 func (c *ChampionMasteryClient) GetByPuuid(puuid, championID string) (*ChampionMastery, error) {
 	logger := c.logger().WithField("method", "GetByPuuid")
 	var mastery *ChampionMastery

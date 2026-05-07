@@ -929,10 +929,10 @@ type dataDragonResponse struct {
 	Type    string
 	Format  string
 	Version string
-	Data    interface{}
+	Data    any
 }
 
-func dataDragonResponseDoer(object interface{}) internal.Doer {
+func dataDragonResponseDoer(object any) internal.Doer {
 	return mock.NewJSONMockDoer(
 		dataDragonResponse{
 			Data: object,

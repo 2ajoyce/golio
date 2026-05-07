@@ -2,8 +2,10 @@ package tft
 
 import (
 	"fmt"
-	"github.com/KnutZuidema/golio/internal"
+
 	log "github.com/sirupsen/logrus"
+
+	"github.com/KnutZuidema/golio/internal"
 )
 
 // SummonerClient provides methods for summoner endpoints of the League of Legends TFT API.
@@ -39,7 +41,8 @@ func (sc *SummonerClient) GetSummonerByPUUID(puuid string) (*Summoner, error) {
 func (sc *SummonerClient) GetSummonerByMe(authorization string) (*Summoner, error) {
 	logger := sc.logger().WithField("method", "GetSummonerByMe")
 	var out *Summoner
-	if err := sc.c.GetInto(endpointSummonerByMe, &out, internal.WithHeader("Authorization", authorization)); err != nil {
+	if err := sc.c.GetInto(endpointSummonerByMe, &out,
+		internal.WithHeader("Authorization", authorization)); err != nil {
 		logger.Debug(err)
 		return nil, err
 	}

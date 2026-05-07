@@ -352,7 +352,7 @@ func (c *Client) ClearCaches() {
 	c.runesMu.Unlock()
 }
 
-func (c *Client) getInto(endpoint string, target interface{}) error {
+func (c *Client) getInto(endpoint string, target any) error {
 	response, err := c.doRequest(dataDragonDataURLFormat, endpoint)
 	if err != nil {
 		return err
@@ -437,5 +437,5 @@ type dataDragonResponse struct {
 	Type    string
 	Format  string
 	Version string
-	Data    interface{}
+	Data    any
 }

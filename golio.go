@@ -35,13 +35,13 @@ import (
 
 // Client is a client for both the Riot API and the Data Dragon service
 type Client struct {
+	Riot       *riot.Client
+	DataDragon *datadragon.Client
+	Static     *static.Client
 	client     internal.Doer
 	logger     log.FieldLogger
 	region     api.Region
 	apiKey     string
-	Riot       *riot.Client
-	DataDragon *datadragon.Client
-	Static     *static.Client
 }
 
 // Option is used to alter the attributes of a client

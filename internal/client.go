@@ -40,7 +40,7 @@ func NewClient(region api.Region, key string, client Doer, logger log.FieldLogge
 }
 
 // GetInto processes a GET request and saves the response body into the given target.
-func (c *Client) GetInto(endpoint string, target interface{}, reqOptions ...RequestOption) error {
+func (c *Client) GetInto(endpoint string, target any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "GetInto",
@@ -60,7 +60,7 @@ func (c *Client) GetInto(endpoint string, target interface{}, reqOptions ...Requ
 }
 
 // PostInto processes a POST request and saves the response body into the given target.
-func (c *Client) PostInto(endpoint string, body, target interface{}, reqOptions ...RequestOption) error {
+func (c *Client) PostInto(endpoint string, body, target any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "PostInto",
@@ -80,7 +80,7 @@ func (c *Client) PostInto(endpoint string, body, target interface{}, reqOptions 
 }
 
 // Put processes a PUT request.
-func (c *Client) Put(endpoint string, body interface{}, reqOptions ...RequestOption) error {
+func (c *Client) Put(endpoint string, body any, reqOptions ...RequestOption) error {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "Put",
@@ -102,7 +102,7 @@ func (c *Client) Get(endpoint string, reqOptions ...RequestOption) (*http.Respon
 }
 
 // Post processes a POST request.
-func (c *Client) Post(endpoint string, body interface{}, reqOptions ...RequestOption) (*http.Response, error) {
+func (c *Client) Post(endpoint string, body any, reqOptions ...RequestOption) (*http.Response, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "Post",
@@ -119,7 +119,9 @@ func (c *Client) Post(endpoint string, body interface{}, reqOptions ...RequestOp
 
 // DoRequest processes a http.Request and returns the response.
 // Rate-Limiting and retrying is handled via the corresponding response headers.
-func (c *Client) DoRequest(method, endpoint string, body io.Reader, reqOptions []RequestOption) (*http.Response, error) {
+func (c *Client) DoRequest(
+	method, endpoint string, body io.Reader, reqOptions []RequestOption,
+) (*http.Response, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "DoRequest",
@@ -171,7 +173,9 @@ func (c *Client) DoRequest(method, endpoint string, body io.Reader, reqOptions [
 }
 
 // NewRequest returns a new http.Request with necessary headers et.
-func (c *Client) NewRequest(method, endpoint string, body io.Reader, reqOptions ...RequestOption) (*http.Request, error) {
+func (c *Client) NewRequest(
+	method, endpoint string, body io.Reader, reqOptions ...RequestOption,
+) (*http.Request, error) {
 	logger := c.Logger().WithFields(
 		log.Fields{
 			"method":   "NewRequest",

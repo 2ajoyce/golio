@@ -229,7 +229,8 @@ type Participant struct {
 	Companion Companion `json:"companion"`
 	// Gold left after participant was eliminated
 	GoldLeft int64 `json:"gold_left"`
-	// The round the participant was eliminated in. Note: If the player was eliminated in stage 2-1 their last_round would be 5.
+	// The round the participant was eliminated in. Note: If the player was
+	// eliminated in stage 2-1 their last_round would be 5.
 	LastRound int64 `json:"last_round"`
 	// Participant Little Legend level. Note: This is not the number of active units
 	Level int64 `json:"level"`
@@ -273,7 +274,9 @@ type Unit struct {
 	CharacterID string `json:"character_id"`
 	// A list of the unit's items. Please refer to the Teamfight Tactics documentation for item ids.
 	Items []int `json:"itemNames"`
-	// If a unit is chosen as part of the Fates set mechanic, the chosen trait will be indicated by this field. Otherwise this field is excluded from the response.
+	// If a unit is chosen as part of the Fates set mechanic, the chosen trait
+	// will be indicated by this field. Otherwise this field is excluded from the
+	// response.
 	Chosen string `json:"chosen"`
 	Name   string `json:"name"`
 	// Unit rarity. This doesn't equate to the unit cost.
@@ -328,7 +331,7 @@ type UpdateContent struct {
 }
 
 type Summoner struct {
-	//Encrypted summoner ID. Max length 63 characters.
+	// Encrypted summoner ID. Max length 63 characters.
 	ID string `json:"id"`
 	// Encrypted account ID. Max length 56 characters.
 	AccountID string `json:"accountId"`
@@ -336,7 +339,9 @@ type Summoner struct {
 	PUUID string `json:"puuid"`
 	// ID of the summoner icon associated with the summoner.
 	ProfileIconID int64 `json:"profileIconId"`
-	// Date summoner was last modified specified as epoch milliseconds. The following events will update this timestamp: summoner name change, summoner level change, or profile icon change.
+	// Date summoner was last modified specified as epoch milliseconds. The
+	// following events will update this timestamp: summoner name change, summoner
+	// level change, or profile icon change.
 	RevisionDate int64 `json:"revisionDate"`
 	// Summoner level associated with the summoner.
 	SummonerLevel int64 `json:"summonerLevel"`

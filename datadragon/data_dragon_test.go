@@ -746,7 +746,7 @@ func TestClient_getInto(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		wantErr bool
 	}{
 		{
@@ -805,7 +805,7 @@ func Test_versionGreaterThan(t *testing.T) {
 	}
 }
 
-func dataDragonResponseDoer(object interface{}) internal.Doer {
+func dataDragonResponseDoer(object any) internal.Doer {
 	return mock.NewJSONMockDoer(
 		dataDragonResponse{
 			Data: object,

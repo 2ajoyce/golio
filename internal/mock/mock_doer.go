@@ -20,7 +20,7 @@ type Doer struct {
 
 // NewJSONMockDoer constructs a new MockDoer with the json representation of an object as body and the given status code
 // CAUTION: silently returns an empty response if object is fails json marshaling
-func NewJSONMockDoer(object interface{}, code int) *Doer {
+func NewJSONMockDoer(object any, code int) *Doer {
 	buffer, _ := json.Marshal(object)
 	body := ResponseBody{
 		Content: buffer,
@@ -36,7 +36,7 @@ func NewJSONMockDoer(object interface{}, code int) *Doer {
 
 type PathJSONResponse struct {
 	PathSuffix string
-	Object     interface{}
+	Object     any
 	Code       int
 }
 
@@ -109,7 +109,7 @@ func (f FailJSONEncoding) MarshalJSON() ([]byte, error) {
 
 // NewRateLimitDoer returns a Doer which returns a 429 Too Many Requests error on the first request
 // and the given object on the second request.
-func NewRateLimitDoer(object interface{}) *Doer {
+func NewRateLimitDoer(object any) *Doer {
 	rateLimitCount := 0
 	return &Doer{
 		Custom: func(r *http.Request) (*http.Response, error) {
@@ -126,7 +126,7 @@ func NewRateLimitDoer(object interface{}) *Doer {
 
 // NewUnavailableOnceDoer returns a Doer which will return a 503 Service Unavailable error on the first
 // request and the given object on the second request.
-func NewUnavailableOnceDoer(object interface{}) *Doer {
+func NewUnavailableOnceDoer(object any) *Doer {
 	unavailableCount := 0
 	return &Doer{
 		Custom: func(r *http.Request) (*http.Response, error) {

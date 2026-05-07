@@ -134,7 +134,7 @@ type RecommendedItemData struct {
 	CustomTag     string               `json:"customTag"`
 	SortRank      int                  `json:"sortrank"`
 	ExtensionPage bool                 `json:"extensionPage"`
-	CustomPanel   interface{}          `json:"customPanel"`
+	CustomPanel   any                  `json:"customPanel"`
 	Blocks        []RecommendedItemSet `json:"blocks"`
 }
 
@@ -304,9 +304,9 @@ type SummonerSpell struct {
 	Cost         []float64 `json:"cost"`
 	CostBurn     string    `json:"costBurn"`
 	Vars         []struct {
-		Link        string      `json:"link"`
-		Coefficient interface{} `json:"coeff"`
-		Key         string      `json:"key"`
+		Link        string `json:"link"`
+		Coefficient any    `json:"coeff"`
+		Key         string `json:"key"`
 	} `json:"vars"`
 	Key           string    `json:"key"`
 	SummonerLevel int       `json:"summonerLevel"`

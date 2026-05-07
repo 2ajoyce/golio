@@ -442,7 +442,7 @@ func TestClient_getInto(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		doer    internal.Doer
 		wantErr bool
 	}{

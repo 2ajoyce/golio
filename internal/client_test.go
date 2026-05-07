@@ -103,7 +103,7 @@ func TestClient_DoRequest(t *testing.T) {
 func TestClient_GetInto(t *testing.T) {
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		doer    Doer
 		wantErr bool
 	}{
@@ -142,7 +142,7 @@ func TestClient_GetInto(t *testing.T) {
 func TestClient_PostInto(t *testing.T) {
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		doer    Doer
 		wantErr bool
 	}{
@@ -181,7 +181,7 @@ func TestClient_PostInto(t *testing.T) {
 func TestClient_Post(t *testing.T) {
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		doer    Doer
 		wantErr bool
 	}{
@@ -215,7 +215,7 @@ func TestClient_Post(t *testing.T) {
 func TestClient_Put(t *testing.T) {
 	tests := []struct {
 		name    string
-		target  interface{}
+		target  any
 		doer    Doer
 		wantErr bool
 	}{
