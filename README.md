@@ -1,7 +1,7 @@
-[![Documentation](https://godoc.org/github.com/KnutZuidema/golio?status.svg)](https://godoc.org/github.com/KnutZuidema/golio)
-[![CI](https://github.com/KnutZuidema/golio/actions/workflows/ci.yml/badge.svg)](https://github.com/KnutZuidema/golio/actions/workflows/ci.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/KnutZuidema/golio)](https://goreportcard.com/report/github.com/KnutZuidema/golio)
-[![codecov](https://codecov.io/gh/KnutZuidema/golio/branch/master/graph/badge.svg)](https://codecov.io/gh/KnutZuidema/golio)
+[![Documentation](https://pkg.go.dev/badge/github.com/KnutZuidema/golio.svg)](https://pkg.go.dev/github.com/KnutZuidema/golio)
+[![CI](https://github.com/2ajoyce/golio/actions/workflows/ci.yml/badge.svg)](https://github.com/2ajoyce/golio/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/2ajoyce/golio)](https://goreportcard.com/report/github.com/2ajoyce/golio)
+[![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/2ajoyce/4360706d1f85e1d95b6fc28ad12141b1/raw/coverage.json)](https://github.com/2ajoyce/golio/actions/workflows/ci.yml)
 
 # Golio
 

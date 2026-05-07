@@ -48,7 +48,21 @@ jobs:
           go-version-file: go.mod
       - run: go mod download
       - run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
-      - uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.txt
+      - name: Update coverage badge
+        if: github.ref == 'refs/heads/master'
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          COVERAGE=$(go tool cover -func=coverage.txt | grep '^total:' | awk '{print $3}')
+          COLOR=$(echo $COVERAGE | awk -F'%' '{
+            v=$1+0
+            if (v>=90) print "brightgreen"
+            else if (v>=75) print "green"
+            else if (v>=60) print "yellow"
+            else print "red"
+          }')
+          curl -sX PATCH https://api.github.com/gists/4360706d1f85e1d95b6fc28ad12141b1 \
+            -H "Authorization: token $GIST_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"files\":{\"coverage.json\":{\"content\":\"{\\\"schemaVersion\\\":1,\\\"label\\\":\\\"coverage\\\",\\\"message\\\":\\\"$COVERAGE\\\",\\\"color\\\":\\\"$COLOR\\\"}\"}}}" \
+            --fail
